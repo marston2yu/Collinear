@@ -65,7 +65,7 @@ public class Point implements Comparable<Point> {
         /* YOUR CODE HERE */
         if (y == that.y && x == that.x) return Double.NEGATIVE_INFINITY;
         if (x == that.x) return Double.POSITIVE_INFINITY;
-        return ((y - that.y) / (x - that.x));
+        return ((double)(y - that.y) / (x - that.x));
     }
 
     /**
@@ -128,8 +128,8 @@ public class Point implements Comparable<Point> {
         Point p1 = new Point(0,0);
         Point p2 = new Point (0, 1);
         Point p3 = new Point (1, 0);
-        Point p4 = new Point (2,4);
-        Point p5 = new Point(2, -4);
+        Point p4 = new Point (3,4);
+        Point p5 = new Point(3, -4);
         System.out.println("Vertical: " + p1.slopeTo(p2));
         System.out.println("Horizontal: " + p1.slopeTo(p3));
         System.out.println("Positive: " + p1.slopeTo(p4));
