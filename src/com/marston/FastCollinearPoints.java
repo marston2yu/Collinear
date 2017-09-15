@@ -13,7 +13,7 @@ public class FastCollinearPoints {
         // 复制数组进行操作，不改变原数组
         Point[] pointsForCope = Arrays.copyOf(points, points.length);
 
-        // Bag 用于存放线段
+        // ArrayList 用于存放线段
         ArrayList<LineSegment> segmentsSet = new ArrayList<>();
 
         for (int i = 0; i < points.length; i++) {
@@ -34,8 +34,22 @@ public class FastCollinearPoints {
                 Boolean find = false;  // 找到共线点标志
                 if (slope == start.slopeTo(pointsForCope[j+1])) {
                     int startIndex = j;
+
+                    // 先向反方向搜索，判断是否为5点共线中的中间点
+                    Boolean mid = false; // 中间点标志位
+                    for (int m = j - 1; m >= 0; m--) {
+                        if (slope == start.slopeTo(pointsForCope[m])) {
+                            mid = true;
+                            break;
+                        }
+                    }
+                    if (mid) {
+                        continue;  // 确定为中间点，跳过这个点
+                    }
+
                     // 顺次找到共线的点，直到发现不共线点或者到达数组末尾，数组末尾需要另行判断
-                    while (j < pointsForCope.length - 1 && start.slopeTo(pointsForCope[++j]) == slope) {}
+                    while (j < pointsForCope.length - 1
+                            && start.slopeTo(pointsForCope[++j]) == slope) {}
                     // 共线点为0、startIndex～j-1或0、startIndex～j（当j为终点时）
                     if (start.slopeTo(pointsForCope[j]) == slope) j++;
                     if (j - 1 - startIndex >= 2) {
@@ -57,7 +71,6 @@ public class FastCollinearPoints {
         Iterator<LineSegment> iter = segmentsSet.iterator();
         for (int i = 0; i < segments.length; i++) {
             segments[i] = iter.next();
-            System.out.println(segments[i]);
         }
     }
 
